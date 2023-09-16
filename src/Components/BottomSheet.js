@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./BottomSheet.css";
 
 const BottomSheet = () => {
-  const [position, setPosition] = useState("90%");
+  const [position, setPosition] = useState("95%");
   const [prevPosition, setPrevPosition] = useState("100%");
   const [animationClass, setAnimationClass] = useState("animation-start");
 
@@ -11,7 +11,7 @@ const BottomSheet = () => {
   };
 
   const calculateNearestSnapPoint = (leavePosition, screenHeight) => {
-    let positions = [10, 50, 90];
+    let positions = [10, 50, 95];
     let nearestPoint = Math.round((leavePosition / screenHeight) * 100);
     let closest = positions.sort(
       (a, b) => Math.abs(nearestPoint - a) - Math.abs(nearestPoint - b)
@@ -25,7 +25,7 @@ const BottomSheet = () => {
     } else if (position === "50%") {
       setPrevPosition("50%");
     } else {
-      setPrevPosition("90%");
+      setPrevPosition("95%");
     }
     setPosition(pos);
 
@@ -34,11 +34,7 @@ const BottomSheet = () => {
   };
 
   return (
-    <div
-      className={`bottom-sheet ${animationClass}`}
-      style={{ top: position }}
-      onMouseLeave={(e) => handleMouseUp(e)}
-    >
+    <div className={`bottom-sheet ${animationClass}`} style={{ top: position }}>
       <style>
         {`
           @keyframes mymove {
@@ -51,19 +47,29 @@ const BottomSheet = () => {
           }
         `}
       </style>
+      <div onMouseLeave={(e) => handleMouseUp(e)} className="handleWrapper">
+        <div className="handle"></div>
+      </div>
       <div className="header">
         <button
-          onClick={(e) => handleButtonClick("50%")}
+          onClick={(e) =>
+            position === "50%"
+              ? handleButtonClick("95%")
+              : handleButtonClick("50%")
+          }
           className="position-btn"
         >
-          Open Bottom Sheet at Middle
+          {`Open Bottom Sheet at ${position === "50%" ? "Bottom" : "middle"}`}
         </button>
-        <div className="handle"></div>
         <button
-          onClick={(e) => handleButtonClick("5%")}
+          onClick={(e) =>
+            position === "5%"
+              ? handleButtonClick("95%")
+              : handleButtonClick("5%")
+          }
           className="position-btn"
         >
-          Open Bottom Sheet at Top
+          {`Open Bottom Sheet at ${position === "5%" ? "bottom" : "top"}`}
         </button>
       </div>
       <div className="content">
