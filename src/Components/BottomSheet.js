@@ -5,10 +5,8 @@ const BottomSheet = () => {
   const [position, setPosition] = useState("90%");
   const [prevPosition, setPrevPosition] = useState("100%");
   const [animationClass, setAnimationClass] = useState("animation-start");
-  const [isDragging, setIsDragging] = useState(false);
 
   const handleMouseUp = (e) => {
-    setIsDragging(false);
     setPosition(`${calculateNearestSnapPoint(e.clientY, window.innerHeight)}%`);
   };
 
@@ -36,7 +34,11 @@ const BottomSheet = () => {
   };
 
   return (
-    <div className={`bottom-sheet ${animationClass}`} style={{ top: position }}>
+    <div
+      className={`bottom-sheet ${animationClass}`}
+      style={{ top: position }}
+      onMouseLeave={(e) => handleMouseUp(e)}
+    >
       <style>
         {`
           @keyframes mymove {
@@ -56,7 +58,7 @@ const BottomSheet = () => {
         >
           Open Bottom Sheet at Middle
         </button>
-        <div className="handle" onMouseLeave={(e) => handleMouseUp(e)}></div>
+        <div className="handle"></div>
         <button
           onClick={(e) => handleButtonClick("5%")}
           className="position-btn"
