@@ -11,7 +11,7 @@ const BottomSheet = () => {
   };
 
   const calculateNearestSnapPoint = (leavePosition, screenHeight) => {
-    let positions = [10, 50, 95];
+    let positions = [5, 50, 95];
     let nearestPoint = Math.round((leavePosition / screenHeight) * 100);
     let closest = positions.sort(
       (a, b) => Math.abs(nearestPoint - a) - Math.abs(nearestPoint - b)
